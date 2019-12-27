@@ -10,13 +10,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+require("./startup/routes")(app);
+
+// --------------------------------------------------------------------------------------------------
+
+
 app.get('/', (req, res) => {
 	res.send('GET / success')
 });
 
+
 app.get('/test', (req, res) => {
 	res.send('GET /test success')
 });
+
+// --------------------------------------------------------------------------------------------------
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
