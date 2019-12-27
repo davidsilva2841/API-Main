@@ -22,11 +22,26 @@ router.get('/test-search', (req, res) => {
 
 // --------------------------------------------------------------------------------------------------
 
-// Searching products
 
+router.post('/', (req, res) => {
+    console.log(req.body);
+    if (!req.body.productId) {
+        res.status(400).send('Missing parameter in body: productId')
+    } else {
+        searchTable('Products', 'ID', req.body.productId)
+            .then(result => {
+                res.send(result);
+            })
+            .catch(() => {
+                res.sendStatus(500);
+            });
+    }
+});
+
+// Searching products
 router.post('/search', (req, res) => {
-    if (!req.body.Name) {
-        res.status(400).send('Missing request body Name')
+    if (!req.body.name) {
+        res.status(400).send('Missing parameter in body: name')
     } else {
         searchTable('Products', 'Name', req.body.Name, true)
             .then(result => {
@@ -37,5 +52,7 @@ router.post('/search', (req, res) => {
             });
     }
 });
+
+
 
 module.exports = router;
