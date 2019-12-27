@@ -19,6 +19,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req, res) => {
+	res.send('GET / success')
+});
+
+app.get('/test', (req, res) => {
+	res.send('GET /test success')
+});
+
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 
