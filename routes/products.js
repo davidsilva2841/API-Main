@@ -43,7 +43,7 @@ router.post('/search', (req, res) => {
     if (!req.body.name) {
         res.status(400).send('Missing parameter in body: name')
     } else {
-        searchTable('Products', 'Name', req.body.Name, true)
+        searchTable('Products', 'Name', req.body.name, true)
             .then(result => {
                 res.send(result);
             })
