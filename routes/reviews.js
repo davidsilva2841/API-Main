@@ -49,13 +49,34 @@ router.post('/', (req, res) => {
         };
         searchTable('Reviews', 'product_id', req.body.productId)
             .then(result => {
-                data.review_count = result.length;
-                // (req.body.reviews) ? data.reviews = result : data.reviews = null;
                 data.reviews = result;
                 return findAverage('Reviews', 'rating', req.body.productId);
             })
             .then(result => {
-                (result.length > 0) ? data.average_rating = result[0].AVERAGE : data.average_rating = null;
+                data.average_rating = result[0].AVERAGE;
+                data.review_count = result[0].COUNT;
+                res.send(data);
+            })
+            .catch(error => {
+                console.error(`FILE: reviews.js () | ERROR: \n`, error);
+                res.sendStatus(500);
+            });
+    }
+});
+
+router.post('/stats', (req, res) => {
+    if (!req.body.productId) {
+        res.status(400).send('Missing parameters in body: productId (int)')
+    } else {
+        let data = {
+            review_count: '',
+            average_rating: ''
+        };
+        findAverage('Reviews', 'rating', req.body.productId)
+            .then(result => {
+                console.log(result);
+                data.average_rating = result[0].AVERAGE;
+                data.review_count = result[0].COUNT;
                 res.send(data);
             })
             .catch(error => {

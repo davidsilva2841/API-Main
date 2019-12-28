@@ -34,8 +34,12 @@ const searchTable = (tblName, column, value, like=false) => {
 };
 
 const findAverage = (tblName, column, productId) => {
-	// let sql = `SELECT AVG(${escId(column)}) AS AVERAGE FROM  WestBuy.${escId(tblName)} WHERE product_id=${esc(productId)};`;
-	let sql = `SELECT CAST(AVG(${escId(column)}) AS DECIMAL(2,1)) AS AVERAGE FROM  WestBuy.${escId(tblName)} WHERE product_id=${esc(productId)};`;
+	let sql = `SELECT 
+                CAST(AVG(${escId(column)}) AS DECIMAL(2,1)) AS AVERAGE, 
+                COUNT(product_id) AS COUNT
+                FROM  WestBuy.${escId(tblName)} 
+                WHERE product_id=${esc(productId)};
+                `;
     return db.queryAsync(sql);
 };
 
