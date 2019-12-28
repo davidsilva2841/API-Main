@@ -7,11 +7,11 @@ const {searchTable} = require('../services/mysql');
 // Test routes
 
 router.get('/test-get', (req, res) => {
-    res.send('GET /api/products/test Working');
+    res.send('GET /api/overview/test Working');
 });
 
 router.get('/test-search', (req, res) => {
-    searchTable('Products', 'Name', 'C', true)
+    searchTable('Overview', 'ProductId', 1)
         .then(result => {
             res.send(result);
         })
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
     if (!req.body.productId) {
         res.status(400).send('Missing parameter in body: productId')
     } else {
-        searchTable('Products', 'ID', req.body.productId)
+        searchTable('Overview', 'ProductId', 1)
             .then(result => {
                 res.send(result);
             })
@@ -36,22 +36,6 @@ router.post('/', (req, res) => {
             });
     }
 });
-
-// Searching products
-router.post('/search', (req, res) => {
-    if (!req.body.name) {
-        res.status(400).send('Missing parameter in body: name')
-    } else {
-        searchTable('Products', 'Name', req.body.name, true)
-            .then(result => {
-                res.send(result);
-            })
-            .catch(() => {
-                res.sendStatus(500);
-            });
-    }
-});
-
 
 
 

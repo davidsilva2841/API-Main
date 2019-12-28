@@ -33,8 +33,15 @@ const searchTable = (tblName, column, value, like=false) => {
     return db.queryAsync(sql);
 };
 
+const findAverage = (tblName, column, productId) => {
+	let sql = `SELECT AVG(${escId(column)}) AS AVERAGE FROM  WestBuy.${escId(tblName)} WHERE product_id=${esc(productId)};`;
+    return db.queryAsync(sql);
+};
+
+
 module.exports = {
-    searchTable
+    searchTable,
+    findAverage
 };
 
 
